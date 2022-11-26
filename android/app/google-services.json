@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "548420737146",
+    "project_id": "clini-vault",
+    "storage_bucket": "clini-vault.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:548420737146:android:bdda17cb3dde8f8aa043c3",
+        "android_client_info": {
+          "package_name": "com.example.my_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "548420737146-ja6sa6fmb0v435aj91uolq6tu6dam060.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKsBPEPmKGlY-yMpeiWJ-W1NzyJEwSXso"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "548420737146-ja6sa6fmb0v435aj91uolq6tu6dam060.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

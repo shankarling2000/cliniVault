@@ -43,6 +43,7 @@ class HomePage extends StatelessWidget {
                 return const VerifyEmailView();
               }
             } else {
+              print('user is null');
               return const LoginView();
             }
             return const Text('Done');

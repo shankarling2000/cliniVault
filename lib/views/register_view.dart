@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/constants/routes.dart';
+import 'package:my_app/utilities/error_dialog.dart';
 import 'dart:developer' as devtools show log;
 import '../firebase_options.dart';
 
@@ -83,15 +84,14 @@ class _RegisterViewState extends State<RegisterView> {
                   password: password,
                 );
                 devtools.log(userCredential.toString());
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil(loginRoute, (route) => false);
+                Navigator.of(context).pushNamed(verifyEmailRoute);
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'weak-password') {
-                  devtools.log('The password is too weak.');
+                  await showErrorDialog(context, 'password too weak');
                 } else if (e.code == 'email-already-in-use') {
-                  devtools.log('The account already exists for that email.');
+                  await showErrorDialog(context, 'Account already exists');
                 } else if (e.code == 'invalid-email') {
-                  devtools.log('The email is invalid.');
+                  await showErrorDialog(context, 'Invalid email');
                 }
               }
             },

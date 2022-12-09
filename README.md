@@ -1,4 +1,4 @@
-# my_app
+# CliniVault
 
 A new Flutter project.
 

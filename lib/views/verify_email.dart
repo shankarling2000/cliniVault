@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/views/reports_view.dart';
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({super.key});
@@ -14,70 +15,6 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Email Verification'),
-      ),
-      body: Column(
-        children: [
-          const Text('Please verify your email address'),
-          TextButton(
-              onPressed: () async {
-                var user = FirebaseAuth.instance.currentUser;
-                await user?.sendEmailVerification();
-
-                const snackBar = SnackBar(
-                  content: Text('Email has been sent,check your spambox'),
-                );
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              },
-              child: const Text('Send email verification')),
-          TextButton(
-              onPressed: (() async {
-                await FirebaseAuth.instance.signOut();
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/login/', (_) => false);
-              }),
-              child: Text('Logout')),
-          TextButton(
-            onPressed: (() async {
-              final user = await FirebaseAuth.instance.currentUser;
-              user!.reload();
-              if (user != null) {
-                print(user);
-                print(user.emailVerified);
-                if (await user.emailVerified) {
-                  print("INSIDE THE DFUCK");
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/reports/', (route) => false);
-                } else {
-                  const snackBar = SnackBar(
-                    content: Text('Email not has been verifed'),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                }
-              }
-            }),
-            child: Text('GEt started'),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-enum MenuAction { logout }
-
-class ReportsView extends StatefulWidget {
-  const ReportsView({super.key});
-
-  @override
-  State<ReportsView> createState() => _ReportsViewState();
-}
-
-class _ReportsViewState extends State<ReportsView> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(' Main UI'),
         actions: [
           PopupMenuButton<MenuAction>(
             onSelected: (value) async {
@@ -101,7 +38,52 @@ class _ReportsViewState extends State<ReportsView> {
           )
         ],
       ),
-      body: const Text('Hello world'),
+      body: Column(
+        children: [
+          SizedBox(
+            height: 10,
+          ),
+          Center(
+            child: const Text('Verify your email address',
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400)),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          TextButton(
+              onPressed: () async {
+                var user = FirebaseAuth.instance.currentUser;
+                await user?.sendEmailVerification();
+
+                const snackBar = SnackBar(
+                  content: Text('Email verification sent'),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              },
+              child: const Text('Send email verification')),
+          TextButton(
+            onPressed: (() async {
+              final user = await FirebaseAuth.instance.currentUser;
+              user!.reload();
+              if (user != null) {
+                print(user);
+                print(user.emailVerified);
+                if (await user.emailVerified) {
+                  print("INSIDE THE DFUCK");
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/reports/', (route) => false);
+                } else {
+                  const snackBar = SnackBar(
+                    content: Text('Email not verified'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+              }
+            }),
+            child: Text('Get started'),
+          )
+        ],
+      ),
     );
   }
 }
@@ -112,7 +94,7 @@ Future<bool> showLogOutDialog(BuildContext context) {
     builder: (context) {
       return AlertDialog(
         title: const Text('Sign out'),
-        content: const Text('Are you sure you want to sign out?'),
+        content: const Text('Are you sure you want to logout?'),
         actions: [
           TextButton(
               onPressed: () {

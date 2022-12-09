@@ -34,17 +34,30 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register'),
+        title: const Text('CliniVault'),
         backgroundColor: Colors.black,
       ),
       body: Column(
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Register",
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.w400),
+              )
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
           TextField(
             controller: _email,
             enableSuggestions: false,
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(
+              border: OutlineInputBorder(),
               hintText: 'Enter your email',
             ),
           ),
@@ -54,6 +67,7 @@ class _RegisterViewState extends State<RegisterView> {
             enableSuggestions: false,
             autocorrect: false,
             decoration: const InputDecoration(
+              border: OutlineInputBorder(),
               hintText: 'Enter your password',
             ),
           ),

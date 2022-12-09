@@ -33,7 +33,7 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text('Login'),
+        title: const Text('CliniVault'),
       ),
       body: Column(
         children: [
@@ -55,6 +55,7 @@ class _LoginViewState extends State<LoginView> {
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(
+              border: OutlineInputBorder(),
               hintText: 'Enter your email',
             ),
           ),
@@ -64,6 +65,7 @@ class _LoginViewState extends State<LoginView> {
             enableSuggestions: false,
             autocorrect: false,
             decoration: const InputDecoration(
+              border: OutlineInputBorder(),
               hintText: 'Enter your password',
             ),
           ),

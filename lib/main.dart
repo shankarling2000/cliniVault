@@ -5,7 +5,6 @@ import 'package:my_app/views/register_view.dart';
 import 'package:my_app/views/verify_email.dart';
 import 'firebase_options.dart';
 import '../views/login_view.dart';
-import 'dart:developer' as devtools;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +18,7 @@ void main() {
       routes: {
         '/login/': (context) => const LoginView(),
         '/register/': (context) => const RegisterView(),
+        '/reports/': (context) => const ReportsView(),
       },
     ),
   );
@@ -69,7 +69,7 @@ class _ReportsViewState extends State<ReportsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(' Main UI'),
+        title: const Text('Reports'),
         actions: [
           PopupMenuButton<MenuAction>(
             onSelected: (value) async {
@@ -93,7 +93,7 @@ class _ReportsViewState extends State<ReportsView> {
           )
         ],
       ),
-      body: const Text('Hello world'),
+      body: const Text('namskara reports'),
     );
   }
 }

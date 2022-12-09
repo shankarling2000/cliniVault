@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as devtools show log;
-import 'verify_email.dart';
+
+import 'package:my_app/constants/routes.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -39,14 +40,14 @@ class _LoginViewState extends State<LoginView> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: const [
               Text(
                 "Login",
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.w400),
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           TextField(
@@ -83,11 +84,11 @@ class _LoginViewState extends State<LoginView> {
                 final user = FirebaseAuth.instance.currentUser;
                 if (user != null) {
                   if (user.emailVerified) {
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/reports/', (route) => false);
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        reportsRoute, (route) => false);
                   } else {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/verifyEmail/', (route) => false);
+                        verifyEmailRoute, (route) => false);
                   }
                 }
               } on FirebaseAuthException catch (e) {
@@ -107,7 +108,7 @@ class _LoginViewState extends State<LoginView> {
           TextButton(
               onPressed: () {
                 Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/register/', (route) => false);
+                    .pushNamedAndRemoveUntil(registerRoute, (route) => false);
               },
               child: const Text('Not Registered yet? Register here'))
         ],

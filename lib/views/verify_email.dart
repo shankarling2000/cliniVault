@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/constants/routes.dart';
 import 'package:my_app/views/reports_view.dart';
 
 class VerifyEmailView extends StatefulWidget {
@@ -24,7 +25,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                   if (shouldLogout) {
                     await FirebaseAuth.instance.signOut();
                     Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/login/', (_) => false);
+                        .pushNamedAndRemoveUntil(loginRoute, (_) => false);
                   }
                   break;
               }
@@ -40,14 +41,14 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
       ),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Center(
-            child: const Text('Verify your email address',
+          const Center(
+            child: Text('Verify your email address',
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400)),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           TextButton(
@@ -71,7 +72,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                 if (await user.emailVerified) {
                   print("INSIDE THE DFUCK");
                   Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/reports/', (route) => false);
+                      .pushNamedAndRemoveUntil(reportsRoute, (route) => false);
                 } else {
                   const snackBar = SnackBar(
                     content: Text('Email not verified'),

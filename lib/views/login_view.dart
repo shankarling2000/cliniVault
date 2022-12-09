@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as devtools show log;
+import 'verify_email.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -31,10 +32,23 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: const Text('Login'),
       ),
       body: Column(
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Login",
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.w400),
+              )
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
           TextField(
             controller: _email,
             enableSuggestions: false,
@@ -64,8 +78,16 @@ class _LoginViewState extends State<LoginView> {
                   email: email,
                   password: password,
                 );
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/reports/', (route) => false);
+                final user = FirebaseAuth.instance.currentUser;
+                if (user != null) {
+                  if (user.emailVerified) {
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil('/reports/', (route) => false);
+                  } else {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/verifyEmail/', (route) => false);
+                  }
+                }
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'user-not-found') {
                   devtools.log('No user found');

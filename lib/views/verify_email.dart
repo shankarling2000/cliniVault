@@ -20,10 +20,43 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
           const Text('Please verify your email address'),
           TextButton(
               onPressed: () async {
-                final user = FirebaseAuth.instance.currentUser;
+                var user = FirebaseAuth.instance.currentUser;
                 await user?.sendEmailVerification();
+
+                const snackBar = SnackBar(
+                  content: Text('Email has been sent,check your spambox'),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
               child: const Text('Send email verification')),
+          TextButton(
+              onPressed: (() async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/login/', (_) => false);
+              }),
+              child: Text('Logout')),
+          TextButton(
+            onPressed: (() async {
+              final user = await FirebaseAuth.instance.currentUser;
+              user!.reload();
+              if (user != null) {
+                print(user);
+                print(user.emailVerified);
+                if (await user.emailVerified) {
+                  print("INSIDE THE DFUCK");
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/reports/', (route) => false);
+                } else {
+                  const snackBar = SnackBar(
+                    content: Text('Email not has been verifed'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+              }
+            }),
+            child: Text('GEt started'),
+          )
         ],
       ),
     );

@@ -17,17 +17,19 @@ void imagePickerModal(BuildContext context,
                   child: Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(color: Colors.blueGrey),
+                    decoration: BoxDecoration(color: Colors.black),
                     child: const Text(
                       "Camera",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.white),
                     ),
                   ),
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 15,
               ),
               GestureDetector(
                 onTap: onGalleryTap,
@@ -35,11 +37,13 @@ void imagePickerModal(BuildContext context,
                   child: Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(color: Colors.blueGrey),
+                    decoration: BoxDecoration(color: Colors.black),
                     child: const Text(
                       "Gallery",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.white),
                     ),
                   ),
                 ),

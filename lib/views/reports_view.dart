@@ -105,6 +105,7 @@ class _ReportsViewState extends State<ReportsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Text(widget.title),
         actions: [
           PopupMenuButton<MenuAction>(
@@ -132,19 +133,20 @@ class _ReportsViewState extends State<ReportsView> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'CLick a image or upload ',
+          children: const <Widget>[
+            Text(
+              "It's so empty here :(",
             ),
           ],
         ),
       ),
+      backgroundColor: Colors.grey[400],
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           imagePickerModal(
             context,
             onCameraTap: () {
-              log('Camera clicked  ');
+              log('Camera clicked ');
               pickImage(source: ImageSource.camera).then((value) {
                 if (value != '') {
                   imageCropperView(value, context).then(
@@ -165,7 +167,7 @@ class _ReportsViewState extends State<ReportsView> {
               });
             },
             onGalleryTap: () {
-              log('Gallery CLicked ');
+              log('Gallery Clicked');
               pickImage(source: ImageSource.gallery).then((value) {
                 if (value != '') {
                   imageCropperView(value, context).then((value) {
@@ -192,7 +194,13 @@ class _ReportsViewState extends State<ReportsView> {
           );
         },
         tooltip: 'Increment',
-        label: const Text("Scan Photo"),
+        label: const Text(
+          "Scan reports",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.black,
       ),
     );
   }

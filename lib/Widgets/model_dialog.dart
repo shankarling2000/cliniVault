@@ -19,7 +19,7 @@ void imagePickerModal(BuildContext context,
                     padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(color: Colors.blueGrey),
                     child: const Text(
-                      "Camera Guru",
+                      "Camera",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
@@ -37,7 +37,7 @@ void imagePickerModal(BuildContext context,
                     padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(color: Colors.blueGrey),
                     child: const Text(
-                      "Gallery Guru",
+                      "Gallery",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),

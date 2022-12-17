@@ -105,6 +105,7 @@ class _ReportsViewState extends State<ReportsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Text(widget.title),
         actions: [
           PopupMenuButton<MenuAction>(
@@ -140,6 +141,7 @@ class _ReportsViewState extends State<ReportsView> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.black,
         onPressed: () {
           imagePickerModal(
             context,

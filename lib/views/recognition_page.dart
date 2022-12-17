@@ -32,6 +32,7 @@ class _RecognizePageState extends State<RecognizePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: const Text("Recognized page"),
         actions: [
           PopupMenuButton<MenuAction>(

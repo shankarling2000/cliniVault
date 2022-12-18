@@ -17,7 +17,7 @@ void main() {
     MaterialApp(
       title: 'CliniVault',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.grey,
       ),
       home: const HomePage(),
       routes: {

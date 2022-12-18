@@ -15,7 +15,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MaterialApp(
-      title: 'CliniVault',
+      title: 'Clini  Vault',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),

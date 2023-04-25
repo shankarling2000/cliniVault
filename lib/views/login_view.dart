@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as devtools show log;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:my_app/constants/routes.dart';
 
@@ -10,19 +11,46 @@ class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
   @override
-  
   State<LoginView> createState() => _LoginViewState();
 }
 
 class _LoginViewState extends State<LoginView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
-
+  late SharedPreferences prefs;
   @override
   void initState() {
     super.initState();
     _email = TextEditingController();
     _password = TextEditingController();
+    SharedPreferences.getInstance().then((SharedPreferences sp) {
+      prefs = sp;
+      final email = prefs.getString('email');
+      final password = prefs.getString('password');
+      if (email != null && password != null) {
+        FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        )
+            .then((userCredential) {
+          final user = FirebaseAuth.instance.currentUser;
+          if (user != null) {
+            if (user.emailVerified) {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                reportsRoute,
+                (route) => false,
+              );
+            } else {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                verifyEmailRoute,
+                (route) => false,
+              );
+            }
+          }
+        });
+      }
+    });
   }
 
   @override
@@ -77,6 +105,8 @@ class _LoginViewState extends State<LoginView> {
             onPressed: () async {
               final email = _email.text;
               final password = _password.text;
+              prefs.setString('email', email);
+              prefs.setString('password', password);
 
               try {
                 final userCredential =

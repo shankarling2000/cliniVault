@@ -4,12 +4,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:my_app/views/reports_view.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path_provider/path_provider.dart';
 import '../constants/routes.dart';
+
 //import 'package:image_to_text/utils/image_cropper_page.dart';
+void show(msg) {
+  print(msg);
+}
+
+final storageRef = FirebaseStorage.instance.ref();
 
 class RecognizePage extends StatefulWidget {
   final String? path;
+
   const RecognizePage({Key? key, this.path}) : super(key: key);
 
   @override
@@ -32,7 +40,6 @@ class _RecognizePageState extends State<RecognizePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        
         title: const Text("Recognized page"),
         actions: [
           PopupMenuButton<MenuAction>(
@@ -64,7 +71,8 @@ class _RecognizePageState extends State<RecognizePage> {
           : Container(
               height: 800,
               width: 400,
-              decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.white)),
               padding: const EdgeInsets.all(20),
               child: TextFormField(
                 controller: controller,
@@ -82,6 +90,7 @@ class _RecognizePageState extends State<RecognizePage> {
     setState(() {
       _isBusy = true;
     });
+
     log("FUCKKKKKKKKKK");
     log(image.filePath!);
     final RecognizedText recognizedText =

@@ -87,6 +87,9 @@ class ReportsView extends StatefulWidget {
   const ReportsView({Key? key, required this.title}) : super(key: key);
 
   final String title;
+  void show(msg) {
+    print(msg);
+  }
 
   @override
   State<ReportsView> createState() => _ReportsViewState();
@@ -170,24 +173,20 @@ class _ReportsViewState extends State<ReportsView> {
               log('Gallery Clicked');
               pickImage(source: ImageSource.gallery).then((value) {
                 if (value != '') {
-                  imageCropperView(value, context).then((value) {
-                    if (value != '') {
-                      imageCropperView(value, context).then(
-                        (value) {
-                          if (value != '') {
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (_) => RecognizePage(
-                                  path: value,
-                                ),
-                              ),
-                            );
-                          }
-                        },
-                      );
-                    }
-                  });
+                  imageCropperView(value, context).then(
+                    (value) {
+                      if (value != '') {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (_) => RecognizePage(
+                              path: value,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  );
                 }
               });
             },

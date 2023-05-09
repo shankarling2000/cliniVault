@@ -145,6 +145,7 @@ class _ReportsViewState extends State<ReportsView> {
       ),
       backgroundColor: Colors.grey[400],
       floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.black,
         onPressed: () {
           imagePickerModal(
             context,

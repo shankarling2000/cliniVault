@@ -72,6 +72,9 @@ class _LoginViewState extends State<LoginView> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
+              const SizedBox(
+                height: 200,
+              ),
               Text(
                 "Login",
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.w400),
@@ -79,7 +82,7 @@ class _LoginViewState extends State<LoginView> {
             ],
           ),
           const SizedBox(
-            height: 30,
+            height: 10,
           ),
           TextField(
             controller: _email,

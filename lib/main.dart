@@ -10,6 +10,7 @@ import 'package:my_app/views/verify_email.dart';
 import 'firebase_options.dart';
 import '../views/login_view.dart';
 import '../views/reports_view.dart';
+import '../views/records.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +28,8 @@ void main() {
               title: 'Scan Page',
             ),
         verifyEmailRoute: (context) => const VerifyEmailView(),
-        recognizePage: (context) => const RecognizePage()
+        recognizePage: (context) => const RecognizePage(),
+        recordsRoute: (context) => records()
       },
       debugShowCheckedModeBanner: false,
     ),

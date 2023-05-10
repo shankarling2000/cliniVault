@@ -3,10 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/constants/routes.dart';
-import 'package:my_app/utilities/error_dialog.dart';
 import 'dart:developer' as devtools show log;
 import '../firebase_options.dart';
 import '../services/auth_service.dart';
+import '../utilities/Textfields.dart';
+import '../utilities/googleLogin.dart';
+import '../utilities/user_register.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -54,47 +56,11 @@ class _RegisterViewState extends State<RegisterView> {
           SizedBox(
             height: 30,
           ),
-          TextField(
-            controller: _email,
-            enableSuggestions: false,
-            autocorrect: false,
-            keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter your email',
-            ),
-          ),
-          TextField(
-            controller: _password,
-            obscureText: true,
-            enableSuggestions: false,
-            autocorrect: false,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter your password',
-            ),
-          ),
+          text_field(_email, TextInputType.emailAddress, "Enter your email"),
+          text_field(_password, TextInputType.text, "Enter your password"),
           TextButton(
-            onPressed: () async {
-              final email = _email.text;
-              final password = _password.text;
-              try {
-                final userCredential =
-                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                  email: email,
-                  password: password,
-                );
-                devtools.log(userCredential.toString());
-                Navigator.of(context).pushNamed(verifyEmailRoute);
-              } on FirebaseAuthException catch (e) {
-                if (e.code == 'weak-password') {
-                  await showErrorDialog(context, 'password too weak');
-                } else if (e.code == 'email-already-in-use') {
-                  await showErrorDialog(context, 'Account already exists');
-                } else if (e.code == 'invalid-email') {
-                  await showErrorDialog(context, 'Invalid email');
-                }
-              }
+            onPressed: () {
+              userRegistration(context);
             },
             child: const Text('Sign up'),
           ),
@@ -105,37 +71,30 @@ class _RegisterViewState extends State<RegisterView> {
             },
             child: const Text("Already registered? Login here"),
           ),
+          Text(
+            'OR',
+            style: TextStyle(fontSize: 30),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              GestureDetector(
+                onTap: () async {
+                  loginwithGoogle(context);
+                },
+                child: Text(
+                  'Continue with  ',
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
+                ),
+              ),
               InkWell(
                 onTap: () async {
-                  try {
-                    AuthService().signInWithGoogle();
-
-                    final user = FirebaseAuth.instance.currentUser;
-                    if (user != null) {
-                      if (user.emailVerified) {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            reportsRoute, (route) => false);
-                      } else {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            verifyEmailRoute, (route) => false);
-                      }
-                    }
-                  } on FirebaseAuthException catch (e) {
-                    if (e.code == 'user-not-found') {
-                      await showErrorDialog(context, 'User not found');
-                    } else if (e.code == 'wrong-password') {
-                      await showErrorDialog(
-                          context, 'Invalid username or password');
-                    }
-                  } catch (e) {
-                    await showErrorDialog(context, 'Error: $e');
-                  }
+                  loginwithGoogle(context);
                 },
                 child: Image.network(
                   'http://pngimg.com/uploads/google/google_PNG19635.png',
+                  height: 60,
+                  width: 50,
                 ),
               )
             ],

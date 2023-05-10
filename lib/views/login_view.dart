@@ -1,13 +1,10 @@
-import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_app/constants/routes.dart';
 
 import '../utilities/Textfields.dart';
-import '../utilities/error_dialog.dart';
 import '../utilities/googleLogin.dart';
 import '../utilities/user_verification.dart';
 

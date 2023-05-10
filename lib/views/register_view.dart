@@ -6,6 +6,7 @@ import 'package:my_app/constants/routes.dart';
 import 'package:my_app/utilities/error_dialog.dart';
 import 'dart:developer' as devtools show log;
 import '../firebase_options.dart';
+import '../services/auth_service.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -98,11 +99,47 @@ class _RegisterViewState extends State<RegisterView> {
             child: const Text('Sign up'),
           ),
           TextButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil(loginRoute, (route) => false);
-              },
-              child: const Text("Already registered? Login here")),
+            onPressed: () {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil(loginRoute, (route) => false);
+            },
+            child: const Text("Already registered? Login here"),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () async {
+                  try {
+                    AuthService().signInWithGoogle();
+
+                    final user = FirebaseAuth.instance.currentUser;
+                    if (user != null) {
+                      if (user.emailVerified) {
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            reportsRoute, (route) => false);
+                      } else {
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            verifyEmailRoute, (route) => false);
+                      }
+                    }
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == 'user-not-found') {
+                      await showErrorDialog(context, 'User not found');
+                    } else if (e.code == 'wrong-password') {
+                      await showErrorDialog(
+                          context, 'Invalid username or password');
+                    }
+                  } catch (e) {
+                    await showErrorDialog(context, 'Error: $e');
+                  }
+                },
+                child: Image.network(
+                  'http://pngimg.com/uploads/google/google_PNG19635.png',
+                ),
+              )
+            ],
+          ),
         ],
       ),
     );

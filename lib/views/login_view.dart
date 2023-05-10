@@ -1,11 +1,15 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer' as devtools show log;
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:my_app/services/auth_service.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_app/constants/routes.dart';
 
 import '../utilities/error_dialog.dart';
+import '../utilities/googleLogin.dart';
+import '../utilities/user_verification.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -69,11 +73,14 @@ class _LoginViewState extends State<LoginView> {
       ),
       body: Column(
         children: [
+          SizedBox(
+            height: 100,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
               const SizedBox(
-                height: 200,
+                height: 20,
               ),
               Text(
                 "Login",
@@ -106,46 +113,45 @@ class _LoginViewState extends State<LoginView> {
           ),
           TextButton(
             onPressed: () async {
-              final email = _email.text;
-              final password = _password.text;
-              prefs.setString('email', email);
-              prefs.setString('password', password);
-
-              try {
-                final userCredential =
-                    await FirebaseAuth.instance.signInWithEmailAndPassword(
-                  email: email,
-                  password: password,
-                );
-                final user = FirebaseAuth.instance.currentUser;
-                if (user != null) {
-                  if (user.emailVerified) {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        reportsRoute, (route) => false);
-                  } else {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        verifyEmailRoute, (route) => false);
-                  }
-                }
-              } on FirebaseAuthException catch (e) {
-                if (e.code == 'user-not-found') {
-                  await showErrorDialog(context, 'User not found');
-                } else if (e.code == 'wrong-password') {
-                  await showErrorDialog(
-                      context, 'Invalid username or password');
-                }
-              } catch (e) {
-                await showErrorDialog(context, 'Error: $e');
-              }
+              userVerification(_email, _password, context);
             },
             child: const Text('Sign in'),
           ),
           TextButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil(registerRoute, (route) => false);
-              },
-              child: const Text('Not Registered yet? Register here'))
+            onPressed: () {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil(registerRoute, (route) => false);
+            },
+            child: const Text('Not Registered yet? Register here'),
+          ),
+          Text(
+            'OR',
+            style: TextStyle(fontSize: 30),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  loginwithGoogle(context);
+                },
+                child: Text(
+                  'Login with  ',
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
+                ),
+              ),
+              InkWell(
+                onTap: () async {
+                  loginwithGoogle(context);
+                },
+                child: Image.network(
+                  'http://pngimg.com/uploads/google/google_PNG19635.png',
+                  height: 60,
+                  width: 50,
+                ),
+              )
+            ],
+          ),
         ],
       ),
     );

@@ -48,6 +48,7 @@ dependencies:
   file_picker: ^5.2.11
   syncfusion_flutter_pdfviewer: ^21.2.3
   cool_alert: ^2.0.1
+  google_sign_in: ^6.1.0
 
 dev_dependencies:
   flutter_test:

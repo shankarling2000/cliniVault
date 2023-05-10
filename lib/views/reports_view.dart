@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_app/utilities/image_cropper_page.dart';
 import 'package:my_app/utilities/image_picker_class.dart';
@@ -170,7 +171,9 @@ class _ReportsViewState extends State<ReportsView> {
               switch (value) {
                 case MenuAction.logout:
                   final shouldLogout = await showLogOutDialog(context);
+                  final GoogleSignIn googleSignIn = GoogleSignIn();
                   if (shouldLogout) {
+                    await googleSignIn.signOut();
                     await FirebaseAuth.instance.signOut();
                     Navigator.of(context)
                         .pushNamedAndRemoveUntil(loginRoute, (_) => false);

@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -48,8 +48,12 @@ class _RecognizePageState extends State<RecognizePage> {
               switch (value) {
                 case MenuAction.logout:
                   final shouldLogout = await showLogOutDialog(context);
+                  final GoogleSignIn googleSignIn = GoogleSignIn();
                   if (shouldLogout) {
+                    await googleSignIn.signOut();
+
                     await FirebaseAuth.instance.signOut();
+
                     Navigator.of(context)
                         .pushNamedAndRemoveUntil(loginRoute, (_) => false);
                   }

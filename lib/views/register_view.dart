@@ -1,11 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/constants/routes.dart';
-import 'dart:developer' as devtools show log;
-import '../firebase_options.dart';
-import '../services/auth_service.dart';
 import '../utilities/Textfields.dart';
 import '../utilities/googleLogin.dart';
 import '../utilities/user_register.dart';
@@ -46,14 +40,14 @@ class _RegisterViewState extends State<RegisterView> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: const [
               Text(
                 "Register",
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.w400),
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           text_field(_email, TextInputType.emailAddress, "Enter your email"),
@@ -71,7 +65,7 @@ class _RegisterViewState extends State<RegisterView> {
             },
             child: const Text("Already registered? Login here"),
           ),
-          Text(
+          const Text(
             'OR',
             style: TextStyle(fontSize: 30),
           ),
@@ -82,7 +76,7 @@ class _RegisterViewState extends State<RegisterView> {
                 onTap: () async {
                   loginwithGoogle(context);
                 },
-                child: Text(
+                child: const Text(
                   'Continue with  ',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
                 ),

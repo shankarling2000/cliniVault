@@ -1,12 +1,12 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app/services/auth_service.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_app/constants/routes.dart';
 
+import '../utilities/Textfields.dart';
 import '../utilities/error_dialog.dart';
 import '../utilities/googleLogin.dart';
 import '../utilities/user_verification.dart';
@@ -91,26 +91,8 @@ class _LoginViewState extends State<LoginView> {
           const SizedBox(
             height: 10,
           ),
-          TextField(
-            controller: _email,
-            enableSuggestions: false,
-            autocorrect: false,
-            keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter your email',
-            ),
-          ),
-          TextField(
-            controller: _password,
-            obscureText: true,
-            enableSuggestions: false,
-            autocorrect: false,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter your password',
-            ),
-          ),
+          text_field(_email, TextInputType.emailAddress, "Enter your email"),
+          text_field(_password, TextInputType.text, "Enter your password"),
           TextButton(
             onPressed: () async {
               userVerification(_email, _password, context);
